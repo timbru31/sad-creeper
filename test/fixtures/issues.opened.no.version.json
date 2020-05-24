@@ -1,0 +1,16 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 1,
+    "user": {
+      "login": "timbru31"
+    },
+    "body": "No version output"
+  },
+  "repository": {
+    "name": "sad-creeper",
+    "owner": {
+      "login": "timbru31"
+    }
+  }
+}

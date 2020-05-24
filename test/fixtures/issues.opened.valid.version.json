@@ -1,0 +1,16 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 1,
+    "user": {
+      "login": "timbru31"
+    },
+    "body": "A /version output looks like this: This server is running CraftBukkit version git-Spigot-06f33d0-86fdf92 (MC: 1.12.2) (Implementing API version 1.12.2-R0.1-SNAPSHOT)"
+  },
+  "repository": {
+    "name": "sad-creeper",
+    "owner": {
+      "login": "timbru31"
+    }
+  }
+}
