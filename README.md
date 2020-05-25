@@ -1,6 +1,6 @@
-# bukkit-server-version
+# sad-creeper
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app
+> A GitHub App built with [Probot](https://github.com/probot/probot) that checks for a valid server version output in newly created issues.
 
 ## Setup
 
@@ -14,10 +14,8 @@ npm start
 
 ## Contributing
 
-If you have suggestions for how bukkit-server-version could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+If you have suggestions for how sad-creeper could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
-For more, check out the [Contributing Guide](CONTRIBUTING.md).
+---
 
-## License
-
-[ISC](LICENSE) © 2020 Tim Brust <github@timbrust.de>
+Built by (c) Tim Brust and contributors. Released under the MIT license.
