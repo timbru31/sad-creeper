@@ -1,0 +1,7 @@
+{
+  "env": {
+    "APP_ID": "@sad-creeper-app-id",
+    "WEBHOOK_SECRET": "@sad-creeper-webhook-secret",
+    "PRIVATE_KEY": "@sad-creeper-private-key"
+  }
+}
