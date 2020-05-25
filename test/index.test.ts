@@ -37,8 +37,6 @@ describe('Sad Creeper', () => {
     probot.load(sadCreeper)
 
     nock('https://api.github.com')
-      .get('/repos/timbru31/sad-creeper-dev/contents/.github/config.yml')
-      .reply(404)
       .get('/repos/timbru31/sad-creeper/contents/.github/config.yml')
       .reply(404)
       .get('/repos/timbru31/.github/contents/.github/config.yml')
@@ -47,13 +45,10 @@ describe('Sad Creeper', () => {
 
   test('creates a comment when an issue is opened w/o a valid version', async (done) => {
     nock('https://api.github.com')
-      .post(
-        '/repos/timbru31/sad-creeper-dev/issues/1/comments',
-        (body: any) => {
-          done(expect(body).toMatchObject(issueCreatedBody))
-          return true
-        }
-      )
+      .post('/repos/timbru31/sad-creeper/issues/1/comments', (body: any) => {
+        done(expect(body).toMatchObject(issueCreatedBody))
+        return true
+      })
       .reply(200)
 
     await probot.receive({ name: 'issues', payload: payloadNoVersion })
@@ -61,13 +56,10 @@ describe('Sad Creeper', () => {
 
   test('creates a comment when an issue is opened w/ a valid version, but included in a comment', async (done) => {
     nock('https://api.github.com')
-      .post(
-        '/repos/timbru31/sad-creeper-dev/issues/1/comments',
-        (body: any) => {
-          done(expect(body).toMatchObject(issueCreatedBody))
-          return true
-        }
-      )
+      .post('/repos/timbru31/sad-creeper/issues/1/comments', (body: any) => {
+        done(expect(body).toMatchObject(issueCreatedBody))
+        return true
+      })
       .reply(200)
 
     await probot.receive({ name: 'issues', payload: payloadVersionInComment })
@@ -77,7 +69,7 @@ describe('Sad Creeper', () => {
     // @ts-ignore: 'resolve' is declared but its value is never
     const nockPromise = new Promise((resolve, reject) => {
       nock('https://api.github.com')
-        .post('/repos/timbru31/sad-creeper-dev/issues/1/comments', (_: any) => {
+        .post('/repos/timbru31/sad-creeper/issues/1/comments', (_: any) => {
           reject(
             done.fail('A valid version should not create an issue comment!')
           )
