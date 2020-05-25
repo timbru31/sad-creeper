@@ -39,6 +39,8 @@ describe('Sad Creeper', () => {
     nock('https://api.github.com')
       .get('/repos/timbru31/sad-creeper-dev/contents/.github/config.yml')
       .reply(404)
+      .get('/repos/timbru31/sad-creeper/contents/.github/config.yml')
+      .reply(404)
       .get('/repos/timbru31/.github/contents/.github/config.yml')
       .reply(404)
   })
