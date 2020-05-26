@@ -11,22 +11,26 @@ export = (app: Application) => {
     if (!issueBody.match(SERVER_VERSION_REGEX)) {
       const config = (await context.config('config.yml'),
       {
-        issueMissingVersionOutputComment:
+        issueIsMissingVersionOutputComment:
           'Your issue does not contain a valid output of the /version command and will now be closed and ignored.\n' +
-          'Please create a new issue, follow the template and include a valid /version output.'
+          'Please create a new issue, follow the template and include a valid /version output.',
+        issueIsMissingVersionOutputClose: true
       }) as ConfigObject
-      if (config && config.issueMissingVersionOutputComment) {
+      if (config && config.issueIsMissingVersionOutputComment) {
         context.github.issues.createComment(
           context.issue({
-            body: config.issueMissingVersionOutputComment
+            body: config.issueIsMissingVersionOutputComment
           })
         )
-        context.github.issues.update(context.issue({ state: 'closed' }))
+        if (config.issueIsMissingVersionOutputClose) {
+          context.github.issues.update(context.issue({ state: 'closed' }))
+        }
       }
     }
   })
 }
 
 interface ConfigObject {
-  issueMissingVersionOutputComment: string
+  issueIsMissingVersionOutputComment: string
+  issueIsMissingVersionOutputClose: boolean
 }

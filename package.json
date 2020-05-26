@@ -17,16 +17,16 @@
     "build": "tsc",
     "build:watch": "tsc && (tsc -w --preserveWatchOutput & nodemon)",
     "dev": "npm run build:watch",
-    "start": "probot run ./lib/index.js",
+    "start": "npm run build && probot run ./lib/index.js",
     "lint": "standard **/*.ts --fix",
     "test": "jest && standard **/*.ts",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "probot": "^9.11.3",
-    "probot-serverless-now": "^2.1.2"
+    "probot": "^9.11.3"
   },
   "devDependencies": {
+    "@now/node": "^1.6.1",
     "@types/jest": "^25.2.3",
     "@types/nock": "^11.1.0",
     "@types/node": "^14.0.5",
