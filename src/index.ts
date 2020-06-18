@@ -3,12 +3,18 @@ import { Application } from 'probot'
 
 const SERVER_VERSION_REGEX = /This server is running \w+\+? version git-\w+-"?.+"? \(MC: (?:\d+\.?){1,}\) \(Implementing API version (?:\d+\.?){1,}-R\d+(?:.\d+){0,}(?:-SNAPSHOT)?\)/
 const COMMENT_REGEX = /(<!--.*?-->)/g
+const SECRET_REGEX = /IReallyKnowWhatIAmDoingISwear/
 
 export = (app: Application) => {
   app.on('issues.opened', async (context) => {
-    let issueBody = context.payload.issue.body
-    issueBody = issueBody ? issueBody.replace(COMMENT_REGEX, '') : ''
-    if (!issueBody.match(SERVER_VERSION_REGEX)) {
+    const originalIssueBody = context.payload.issue.body
+    const cleanedIssueBody = originalIssueBody
+      ? originalIssueBody.replace(COMMENT_REGEX, '')
+      : ''
+    if (
+      !cleanedIssueBody.match(SERVER_VERSION_REGEX) &&
+      !originalIssueBody.match(SECRET_REGEX)
+    ) {
       const config = (await context.config('config.yml'),
       {
         issueIsMissingVersionOutputComment:

@@ -6,6 +6,7 @@ import { join } from 'path'
 import sadCreeper from '../src'
 import payloadNoVersion from './fixtures/issues.opened.no.version.json'
 import payloadVersionInComment from './fixtures/issues.opened.version.in.comment.json'
+import payloadWithSecretPhrase from './fixtures/issues.opened.no.version.but.secret.json'
 import payloadValidVersion from './fixtures/issues.opened.valid.version.json'
 const issueCreatedBody = {
   body:
@@ -88,6 +89,32 @@ describe('Sad Creeper', () => {
     await probot.receive({
       name: 'issues',
       payload: payloadValidVersion
+    })
+
+    await Promise.race([nockPromise, timeout])
+  })
+
+  test('creates no comment when an issue is opened w/ the secret phrase', async (done) => {
+    // @ts-ignore: 'resolve' is declared but its value is never
+    const nockPromise = new Promise((resolve, reject) => {
+      nock('https://api.github.com')
+        .post('/repos/timbru31/sad-creeper/issues/1/comments', (_: any) => {
+          reject(done.fail('The secret phrase should not create a comment!'))
+          return true
+        })
+        .reply(200)
+    })
+
+    const timeout = new Promise((resolve) => {
+      const id = setTimeout(() => {
+        clearTimeout(id)
+        resolve(done())
+      }, 3500)
+    })
+
+    await probot.receive({
+      name: 'issues',
+      payload: payloadWithSecretPhrase
     })
 
     await Promise.race([nockPromise, timeout])
