@@ -8,7 +8,7 @@ import sadCreeper from '../src'
 import { promises as fsPromises } from 'fs'
 import { resolve } from 'path'
 
-let probot: Probot
+let probot: Probot = null
 
 const initializeProbot = () => {
   const options = {
@@ -16,15 +16,14 @@ const initializeProbot = () => {
     id: Number(process.env.APP_ID),
     secret: process.env.WEBHOOK_SECRET
   }
-  // @ts-ignore Block-scoped variable 'probot' used before its declaration.ts(2448)
-  // eslint-disable-next-line no-use-before-define
-  const probot = probot || createProbot(options)
 
-  process.on('unhandledRejection', probot.errorHandler as any)
-  probot.load(sadCreeper)
+  const localProbotInstance = probot || createProbot(options)
 
-  probot.server.use(logRequestErrors)
-  return probot
+  process.on('unhandledRejection', localProbotInstance.errorHandler as any)
+  localProbotInstance.load(sadCreeper)
+
+  localProbotInstance.server.use(logRequestErrors)
+  return localProbotInstance
 }
 
 export default async (request: NowRequest, response: NowResponse) => {
