@@ -8,7 +8,7 @@ import sadCreeper from '../src'
 import { promises as fsPromises } from 'fs'
 import { resolve } from 'path'
 
-let probot: Probot = null
+let probot: Probot
 
 const initializeProbot = () => {
   const options = {
