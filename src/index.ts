@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { Application } from 'probot'
 
-const SERVER_VERSION_REGEX = /This server is running \w+\+? version git-\w+-"?.+"?\(MC:\s*(?:\d+\.?){1,}\)\s*\(Implementing API ver
+const SERVER_VERSION_REGEX = /This server is running \w+\+? version git-\w+-"?.+"? \(MC:\s*(?:\d+\.?){1,}\)\s*\(Implementing API ver
 ion (?:\d+\.?){1,}-R\d+(?:.\d+){0,}(?:-SNAPSHOT)?\)/i
 const COMMENT_REGEX = /(<!--.*?-->)/g
 const SECRET_REGEX = /IReallyKnowWhatIAmDoingISwear/
