@@ -1,3 +1,0 @@
-issueMissingVersionOutputComment: |
-  Your issue does not contain a valid output of the /version command and will now be closed and ignored.
-  Please create a new issue, follow the template and include a valid /version output.
