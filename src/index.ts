@@ -15,6 +15,7 @@ export = (app: Application) => {
       !cleanedIssueBody.match(SERVER_VERSION_REGEX) &&
       !originalIssueBody.match(SECRET_REGEX)
     ) {
+      console.log(await context.config('config.yml'));
       const config = (await context.config('config.yml'),
       {
         issueIsMissingVersionOutputComment:
@@ -22,6 +23,7 @@ export = (app: Application) => {
           'Please create a new issue, follow the template and include a valid /version output.',
         issueIsMissingVersionOutputClose: true
       }) as ConfigObject
+      console.log(config)
       if (config && config.issueIsMissingVersionOutputComment) {
         context.github.issues.createComment(
           context.issue({
