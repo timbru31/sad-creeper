@@ -1,3 +1,4 @@
+/* global NodeJS */
 import nock from 'nock'
 import { Probot } from 'probot'
 import { readFile } from 'fs'
