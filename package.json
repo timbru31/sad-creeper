@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@now/node": "^1.8.5",
-    "@types/jest": "^26.0.15",
+    "@types/jest": "^26.0.16",
     "@types/nock": "^11.1.0",
     "@types/node": "^14.14.10",
     "@typescript-eslint/parser": "^4.9.0",
