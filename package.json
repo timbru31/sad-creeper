@@ -40,9 +40,6 @@
     "ts-jest": "^26.5.4",
     "typescript": "^4.2.3"
   },
-  "engines": {
-    "node": ">= 12.21"
-  },
   "standard": {
     "parser": "@typescript-eslint/parser",
     "env": [
