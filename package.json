@@ -23,15 +23,15 @@
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "probot": "^9.14.1"
+    "@probot/get-private-key": "^1.1.0",
+    "probot": "^11.1.0"
   },
   "devDependencies": {
-    "@now/node": "^1.8.5",
     "@types/jest": "^26.0.21",
-    "@types/nock": "^11.1.0",
     "@types/node": "^14.14.35",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
-    "eslint-plugin-typescript": "^0.14.0",
+    "@vercel/node": "^1.9.1",
     "jest": "^26.6.3",
     "nock": "^13.0.11",
     "nodemon": "^2.0.7",
@@ -41,7 +41,7 @@
     "typescript": "^4.2.3"
   },
   "engines": {
-    "node": ">= 10.16"
+    "node": ">= 12.21"
   },
   "standard": {
     "parser": "@typescript-eslint/parser",
@@ -49,7 +49,7 @@
       "jest"
     ],
     "plugins": [
-      "typescript"
+      "@typescript-eslint"
     ]
   },
   "jest": {

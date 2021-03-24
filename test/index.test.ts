@@ -1,6 +1,6 @@
 /* global NodeJS */
 import nock from 'nock'
-import { Probot } from 'probot'
+import { Probot, ProbotOctokit } from 'probot'
 import { readFile } from 'fs'
 import { join } from 'path'
 
@@ -35,14 +35,28 @@ describe('Sad Creeper', () => {
 
   beforeEach(() => {
     nock.disableNetConnect()
-    probot = new Probot({ id: 123, cert: mockCert })
-    probot.load(sadCreeper)
-
     nock('https://api.github.com')
-      .get('/repos/timbru31/sad-creeper/contents/.github/config.yml')
+      .get('/repos/timbru31/sad-creeper/contents/.github%2Fconfig.yml')
       .reply(404)
-      .get('/repos/timbru31/.github/contents/.github/config.yml')
+      .get('/repos/timbru31/.github/contents/.github%2Fconfig.yml')
       .reply(404)
+      .post('/app/installations/2/access_tokens')
+      .reply(200, {
+        token: 'test',
+        permissions: {
+          issues: 'write'
+        }
+      })
+
+    probot = new Probot({
+      appId: 123,
+      privateKey: mockCert,
+      Octokit: ProbotOctokit.defaults({
+        retry: { enabled: false },
+        throttle: { enabled: false }
+      })
+    })
+    probot.load(sadCreeper)
   })
 
   test('creates a comment when an issue is opened w/o a valid version', async (done) => {
@@ -52,16 +66,20 @@ describe('Sad Creeper', () => {
         return true
       })
       .reply(200)
+      .patch('/repos/timbru31/sad-creeper/issues/1')
+      .reply(200)
 
     await probot.receive({ name: 'issues', payload: payloadNoVersion })
   })
 
   test('creates a comment when an issue is opened w/ a valid version, but included in a comment', async (done) => {
     nock('https://api.github.com')
-      .post('/repos/timbru31/sad-creeper/issues/1/comments', (body: any) => {
+      .post('/repos/timbru31/sad-creeper/issues/2/comments', (body: any) => {
         done(expect(body).toMatchObject(issueCreatedBody))
         return true
       })
+      .reply(200)
+      .patch('/repos/timbru31/sad-creeper/issues/2')
       .reply(200)
 
     await probot.receive({ name: 'issues', payload: payloadVersionInComment })

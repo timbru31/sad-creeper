@@ -1,32 +1,30 @@
 // eslint-disable-next-line no-unused-vars
-import { NowRequest, NowResponse } from '@now/node'
+import { VercelRequest, VercelResponse } from '@vercel/node'
 // eslint-disable-next-line no-unused-vars
 import { createProbot, Probot } from 'probot'
-import { findPrivateKey } from 'probot/lib/private-key'
-import { logRequestErrors } from 'probot/lib/middleware/log-request-errors'
 import sadCreeper from '../src'
 import { promises as fsPromises } from 'fs'
 import { resolve } from 'path'
+import { getPrivateKey } from '@probot/get-private-key'
 
 let probot: Probot
 
 const initializeProbot = () => {
   const options = {
-    cert: String(findPrivateKey()),
-    id: Number(process.env.APP_ID),
+    appId: Number(process.env.APP_ID),
+    privateKey: getPrivateKey(),
     secret: process.env.WEBHOOK_SECRET
   }
 
-  const localProbotInstance = probot || createProbot(options)
+  const localProbotInstance = probot || createProbot({ overrides: options })
 
-  process.on('unhandledRejection', localProbotInstance.errorHandler as any)
+  // process.on('unhandledRejection', getErrorHandler)
   localProbotInstance.load(sadCreeper)
 
-  localProbotInstance.server.use(logRequestErrors)
   return localProbotInstance
 }
 
-export default async (request: NowRequest, response: NowResponse) => {
+export default async (request: VercelRequest, response: VercelResponse) => {
   if (request.method === 'GET') {
     const content = await fsPromises.readFile(
       resolve(__dirname, '../public/index.html'),
@@ -39,8 +37,8 @@ export default async (request: NowRequest, response: NowResponse) => {
   }
 
   const name =
-    (request.headers['x-github-event'] as string) ||
-    (request.headers['X-GitHub-Event'] as string)
+    (request.headers['x-github-event'] as any) ||
+    (request.headers['X-GitHub-Event'] as any)
   const id =
     (request.headers['x-github-delivery'] as string) ||
     (request.headers['X-GitHub-Delivery'] as string)
