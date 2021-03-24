@@ -12,7 +12,7 @@ let probot: Probot
 const initializeProbot = () => {
   const options = {
     appId: Number(process.env.APP_ID),
-    privateKey: getPrivateKey(),
+    privateKey: getPrivateKey()!,
     secret: process.env.WEBHOOK_SECRET
   }
 
