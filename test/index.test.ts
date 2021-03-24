@@ -40,15 +40,9 @@ describe('Sad Creeper', () => {
       .reply(404)
       .get('/repos/timbru31/.github/contents/.github%2Fconfig.yml')
       .reply(404)
-      .post('/app/installations/2/access_tokens')
-      .reply(200, {
-        token: 'test',
-        permissions: {
-          issues: 'write'
-        }
-      })
 
     probot = new Probot({
+      githubToken: 'test',
       appId: 123,
       privateKey: mockCert,
       Octokit: ProbotOctokit.defaults({
@@ -59,27 +53,33 @@ describe('Sad Creeper', () => {
     probot.load(sadCreeper)
   })
 
-  test('creates a comment when an issue is opened w/o a valid version', async (done) => {
+  test('creates a comment when an issue is opened w/o a valid version', async () => {
     nock('https://api.github.com')
       .post('/repos/timbru31/sad-creeper/issues/1/comments', (body: any) => {
-        done(expect(body).toMatchObject(issueCreatedBody))
+        expect(body).toMatchObject(issueCreatedBody)
         return true
       })
       .reply(200)
-      .patch('/repos/timbru31/sad-creeper/issues/1')
+      .patch('/repos/timbru31/sad-creeper/issues/1', (body: any) => {
+        expect(body?.state).toStrictEqual('closed')
+        return true
+      })
       .reply(200)
 
     await probot.receive({ name: 'issues', payload: payloadNoVersion })
   })
 
-  test('creates a comment when an issue is opened w/ a valid version, but included in a comment', async (done) => {
+  test('creates a comment when an issue is opened w/ a valid version, but included in a comment', async () => {
     nock('https://api.github.com')
       .post('/repos/timbru31/sad-creeper/issues/2/comments', (body: any) => {
-        done(expect(body).toMatchObject(issueCreatedBody))
+        expect(body).toMatchObject(issueCreatedBody)
         return true
       })
       .reply(200)
-      .patch('/repos/timbru31/sad-creeper/issues/2')
+      .patch('/repos/timbru31/sad-creeper/issues/2', (body: any) => {
+        expect(body?.state).toStrictEqual('closed')
+        return true
+      })
       .reply(200)
 
     await probot.receive({ name: 'issues', payload: payloadVersionInComment })
@@ -102,7 +102,7 @@ describe('Sad Creeper', () => {
       const id = setTimeout(() => {
         clearTimeout(id)
         resolve(done())
-      }, 3500)
+      }, 1000)
     })
 
     await probot.receive({
@@ -128,7 +128,7 @@ describe('Sad Creeper', () => {
       const id = setTimeout(() => {
         clearTimeout(id)
         resolve(done())
-      }, 3500)
+      }, 1000)
     })
 
     await probot.receive({

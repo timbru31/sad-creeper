@@ -17,8 +17,6 @@ const initializeProbot = () => {
   }
 
   const localProbotInstance = probot || createProbot({ overrides: options })
-
-  // process.on('unhandledRejection', getErrorHandler)
   localProbotInstance.load(sadCreeper)
 
   return localProbotInstance
@@ -50,7 +48,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
       name,
       payload: request.body
     })
-    response.status(200)
+    response.status(200).send(null)
   } catch (err) {
     response
       .status(500)

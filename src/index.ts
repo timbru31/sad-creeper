@@ -20,21 +20,22 @@ export = (app: Probot) => {
       !cleanedIssueBody.match(SERVER_VERSION_REGEX) &&
       !originalIssueBody.match(SECRET_REGEX)
     ) {
-      const config = (await context.config('config.yml'),
-      {
+      const config = await context.config<ConfigObject>('config.yml', {
         issueIsMissingVersionOutputComment:
           'Your issue does not contain a valid output of the /version command and will now be closed and ignored.\n' +
           'Please create a new issue, follow the template and include a valid /version output.',
         issueIsMissingVersionOutputClose: true
-      }) as ConfigObject
+      })
       if (config && config.issueIsMissingVersionOutputComment) {
-        context.octokit.issues.createComment(
+        await context.octokit.issues.createComment(
           context.issue({
             body: config.issueIsMissingVersionOutputComment
           })
         )
         if (config.issueIsMissingVersionOutputClose) {
-          context.octokit.issues.update(context.issue({ state: 'closed' }))
+          await context.octokit.issues.update(
+            context.issue({ state: 'closed' })
+          )
         }
       }
     }
