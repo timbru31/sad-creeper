@@ -1,7 +1,7 @@
 {
   "action": "opened",
   "issue": {
-    "number": 1,
+    "number": 2,
     "user": {
       "login": "timbru31"
     },
@@ -12,5 +12,8 @@
     "owner": {
       "login": "timbru31"
     }
+  },
+  "installation": {
+    "id": 2
   }
 }

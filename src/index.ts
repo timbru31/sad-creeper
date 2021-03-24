@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { Application } from 'probot'
+import { Probot } from 'probot'
 
 interface ConfigObject {
   issueIsMissingVersionOutputComment: string
@@ -10,7 +10,7 @@ const SERVER_VERSION_REGEX = /This server is running \w+\+? version git-\w+-"?.+
 const COMMENT_REGEX = /(<!--.*?-->)/g
 const SECRET_REGEX = /IReallyKnowWhatIAmDoingISwear/
 
-export = (app: Application) => {
+export = (app: Probot) => {
   app.on('issues.opened', async (context) => {
     const originalIssueBody = context.payload.issue.body
     const cleanedIssueBody = originalIssueBody
@@ -28,13 +28,13 @@ export = (app: Application) => {
         issueIsMissingVersionOutputClose: true
       }) as ConfigObject
       if (config && config.issueIsMissingVersionOutputComment) {
-        context.github.issues.createComment(
+        context.octokit.issues.createComment(
           context.issue({
             body: config.issueIsMissingVersionOutputComment
           })
         )
         if (config.issueIsMissingVersionOutputClose) {
-          context.github.issues.update(context.issue({ state: 'closed' }))
+          context.octokit.issues.update(context.issue({ state: 'closed' }))
         }
       }
     }
