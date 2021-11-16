@@ -7,7 +7,7 @@ interface ConfigObject {
 }
 
 const SERVER_VERSION_REGEX =
-  /(?:This server is running )\w+\+? version git-\w+-"?.+"? \(MC:\s*(?:\d+\.?){1,}\)\s*\(Implementing API version (?:\d+\.?){1,}-R\d+(?:.\d+){0,}(?:-SNAPSHOT)?\)/i
+  /(?:This server is running )?\w*\+?\s*version (?:git-)?\w+-"?.+"? \(MC:\s*(?:\d+\.?){1,}\)\s*\(Implementing API version (?:\d+\.?){1,}-R\d+(?:.\d+){0,}(?:-SNAPSHOT)?\)/i
 const COMMENT_REGEX = /(<!--.*?-->)/g
 const SECRET_REGEX = /IReallyKnowWhatIAmDoingISwear/
 
