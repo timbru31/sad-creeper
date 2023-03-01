@@ -1,6 +1,4 @@
-// eslint-disable-next-line no-unused-vars
 import { VercelRequest, VercelResponse } from '@vercel/node'
-// eslint-disable-next-line no-unused-vars
 import { createProbot, Probot } from 'probot'
 import sadCreeper from '../src'
 import { promises as fsPromises } from 'fs'
