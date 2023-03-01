@@ -85,23 +85,23 @@ describe('Sad Creeper', () => {
     await probot.receive({ name: 'issues', payload: payloadVersionInComment })
   })
 
-  test('creates no comment when an issue is opened w/ a valid version', async (done) => {
+  test('creates no comment when an issue is opened w/ a valid version', async () => {
     // @ts-ignore: 'resolve' is declared but its value is never
-    const nockPromise = new Promise((resolve, reject) => {
+    const nockPromise = new Promise((_resolve, reject) => {
       nock('https://api.github.com')
         .post('/repos/timbru31/sad-creeper/issues/1/comments', (_: any) => {
           reject(
-            done.fail('A valid version should not create an issue comment!')
+            new Error('A valid version should not create an issue comment!')
           )
           return true
         })
         .reply(200)
     })
 
-    const timeout = new Promise((resolve) => {
+    const timeout = new Promise<void>((resolve) => {
       const id = setTimeout(() => {
         clearTimeout(id)
-        resolve(done())
+        resolve()
       }, 1000)
     })
 
@@ -113,21 +113,21 @@ describe('Sad Creeper', () => {
     await Promise.race([nockPromise, timeout])
   })
 
-  test('creates no comment when an issue is opened w/ the secret phrase', async (done) => {
+  test('creates no comment when an issue is opened w/ the secret phrase', async () => {
     // @ts-ignore: 'resolve' is declared but its value is never
-    const nockPromise = new Promise((resolve, reject) => {
+    const nockPromise = new Promise((_resolve, reject) => {
       nock('https://api.github.com')
         .post('/repos/timbru31/sad-creeper/issues/1/comments', (_: any) => {
-          reject(done.fail('The secret phrase should not create a comment!'))
+          reject(new Error('The secret phrase should not create a comment!'))
           return true
         })
         .reply(200)
     })
 
-    const timeout = new Promise((resolve) => {
+    const timeout = new Promise<void>((resolve) => {
       const id = setTimeout(() => {
         clearTimeout(id)
-        resolve(done())
+        resolve()
       }, 1000)
     })
 

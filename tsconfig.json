@@ -21,6 +21,6 @@
         "pretty": false,
         "skipLibCheck": true
     },
-    "include": ["src/", "test/typings.d.ts"],
+    "include": ["src/"],
     "compileOnSave": false
 }
