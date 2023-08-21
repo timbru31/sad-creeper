@@ -16,7 +16,8 @@ jobs:
         node-version: [18]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3.5.3
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3.8.1
       with:
@@ -34,6 +35,6 @@ jobs:
 
     steps:
       - name: Automatically merge dependabot upgrades
-        uses: fastify/github-action-merge-dependabot@v3
+        uses: fastify/github-action-merge-dependabot@v3.9.0
         with:
           target: minor
