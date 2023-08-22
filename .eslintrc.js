@@ -4,7 +4,12 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   root: true,
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   parserOptions: {
     project: 'tsconfig.test.json',
