@@ -4,7 +4,7 @@ import { getPrivateKey } from '@probot/get-private-key';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { promises as fsPromises } from 'fs';
 import { resolve } from 'path';
-import { Probot, createProbot } from 'probot';
+import { Probot } from 'probot';
 import sadCreeper from '../src';
 
 let probot: Probot;
@@ -16,7 +16,7 @@ const initializeProbot = async () => {
     secret: process.env.WEBHOOK_SECRET,
   };
 
-  const localProbotInstance = probot || createProbot({ overrides: options });
+  const localProbotInstance = probot || new Probot(options);
   await localProbotInstance.load(sadCreeper);
 
   return localProbotInstance;
