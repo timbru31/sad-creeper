@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@probot/get-private-key": "^1.1.2",
-    "probot": "^13.3.0"
+    "probot": "^13.3.5"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
