@@ -1,14 +1,18 @@
-import type { IssuesOpenedEvent, Issue } from '@octokit/webhooks-types';
-import { readFile } from 'fs';
+import type { Issue, IssuesOpenedEvent } from '@octokit/webhooks-types';
 import nock from 'nock';
-import { join } from 'path';
+import { readFile } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Probot, ProbotOctokit } from 'probot';
-
 import sadCreeper from '../src';
 import payloadWithSecretPhrase from './fixtures/issues.opened.no.version.but.secret.json';
 import payloadNoVersion from './fixtures/issues.opened.no.version.json';
 import payloadValidVersion from './fixtures/issues.opened.valid.version.json';
 import payloadVersionInComment from './fixtures/issues.opened.version.in.comment.json';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const issueCreatedBody = {
   body:
     'Your issue does not contain a valid output of the /version command and will now be closed and ignored.\n' +
@@ -22,7 +26,6 @@ describe('Sad Creeper', () => {
   beforeAll((done) => {
     readFile(join(__dirname, 'fixtures/mock-cert.pem'), { encoding: 'utf8' }, (err: NodeJS.ErrnoException | null, data: string) => {
       if (err) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return done(err);
       }
       mockCert = data;
@@ -93,7 +96,6 @@ describe('Sad Creeper', () => {
   test('creates no comment when an issue is opened w/ a valid version', async () => {
     const nockPromise = new Promise((_resolve, reject) => {
       nock('https://api.github.com')
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .post('/repos/timbru31/sad-creeper/issues/1/comments', (_body: IssuesOpenedEvent) => {
           reject(new Error('A valid version should not create an issue comment!'));
           return true;
@@ -120,7 +122,6 @@ describe('Sad Creeper', () => {
   test('creates no comment when an issue is opened w/ the secret phrase', async () => {
     const nockPromise = new Promise((_resolve, reject) => {
       nock('https://api.github.com')
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .post('/repos/timbru31/sad-creeper/issues/1/comments', (_body: IssuesOpenedEvent) => {
           reject(new Error('The secret phrase should not create a comment!'));
           return true;

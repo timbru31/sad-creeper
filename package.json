@@ -1,6 +1,8 @@
 {
   "name": "sad-creeper",
   "version": "1.0.0",
+  "type": "module",
+  "exports": "./index.js",
   "private": true,
   "description": "A Probot app to check for a valid server version output in newly created issues.",
   "author": "Tim Brust <github@timbrust.de>",
@@ -19,20 +21,20 @@
     "dev": "npm run build:watch",
     "start": "npm run build && probot run ./lib/index.js",
     "lint": "eslint **/*.ts --fix",
-    "test": "jest && eslint **/*.ts",
-    "test:watch": "jest --watch --notify --notifyMode=change --coverage"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js && eslint **/*.ts",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
     "@probot/get-private-key": "^2.0.0",
     "probot": "^13.3.7"
   },
   "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@types/eslint__js": "^8.42.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.4",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
     "@vercel/node": "^3.2.9",
-    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "jest": "^29.7.0",
     "nock": "^14.0.0-beta.11",
@@ -40,6 +42,10 @@
     "prettier": "^3.3.3",
     "smee-client": "^2.0.3",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

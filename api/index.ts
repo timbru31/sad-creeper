@@ -2,12 +2,15 @@ import type { EmitterWebhookEvent } from '@octokit/webhooks';
 import type { IssuesOpenedEvent } from '@octokit/webhooks-types';
 import { getPrivateKey } from '@probot/get-private-key';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { promises as fsPromises } from 'fs';
-import { resolve } from 'path';
+import { promises as fsPromises } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Probot } from 'probot';
-import sadCreeper from '../src';
+import sadCreeper from '../src/index.js';
 
 let probot: Probot;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const initializeProbot = async () => {
   const options = {

@@ -10,7 +10,7 @@ const SERVER_VERSION_REGEX =
 const COMMENT_REGEX = /(<!--.*?-->)/g;
 const SECRET_REGEX = /IReallyKnowWhatIAmDoingISwear/;
 
-export = (app: Probot) => {
+function sadCreeper(app: Probot) {
   app.on('issues.opened', async (context) => {
     const originalIssueBody = context.payload.issue.body;
     const cleanedIssueBody = originalIssueBody ? originalIssueBody.replace(COMMENT_REGEX, '') : '';
@@ -33,4 +33,6 @@ export = (app: Probot) => {
       }
     }
   });
-};
+}
+
+export default sadCreeper;
