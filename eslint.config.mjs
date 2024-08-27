@@ -20,5 +20,11 @@ export default tseslint.config({
         ignoreRestSiblings: true,
       },
     ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 });
