@@ -2,7 +2,7 @@
     "compilerOptions": {
         "incremental": true,
         "target": "ESNext",
-        "module": "Node16",
+        "module": "NodeNext",
         "lib": ["ES2023"],
         "allowJs": true,
         "checkJs": true,
@@ -14,7 +14,7 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
-        "moduleResolution": "Node16",
+        "moduleResolution": "NodeNext",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,

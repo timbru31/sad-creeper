@@ -3,5 +3,10 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "javascript.validate.enable": false,
-  "cSpell.words": ["Probot"]
+  "cSpell.words": [
+    "Probot"
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
