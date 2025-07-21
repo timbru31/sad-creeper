@@ -34,7 +34,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.3",
     "@vercel/node": "^5.3.6",
-    "eslint-config-prettier": "^10.1.5",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.1",
     "jest": "^30.0.4",
     "nock": "^14.0.5",
