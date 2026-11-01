@@ -21,8 +21,8 @@
     "dev": "npm run build:watch",
     "start": "npm run build && probot run ./lib/index.js",
     "lint": "eslint **/*.ts --fix",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js && eslint **/*.ts",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch --notify --notifyMode=change --coverage"
+    "test": "vitest run && eslint **/*.ts",
+    "test:watch": "vitest --coverage"
   },
   "dependencies": {
     "@probot/get-private-key": "^2.1.1",
@@ -31,19 +31,18 @@
   "devDependencies": {
     "@eslint/js": "^9.31.0",
     "@types/eslint__js": "^8.42.3",
-    "@types/jest": "^30.0.0",
     "@types/node": "^26.6.6",
     "@vercel/node": "^5.10.2",
+    "@vitest/coverage-v8": "^5.0.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
-    "jest": "^30.4.2",
     "nock": "^14.0.15",
     "nodemon": "^3.1.14",
     "prettier": "^3.8.4",
     "smee-client": "^4.4.1",
-    "ts-jest": "^29.4.11",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.61.1"
+    "typescript-eslint": "^8.61.1",
+    "vitest": "^5.0.5"
   },
   "engines": {
     "node": ">=26"

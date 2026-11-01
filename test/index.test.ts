@@ -1,6 +1,7 @@
 import type { Issue, IssuesOpenedEvent } from '@octokit/webhooks-types';
 import nock from 'nock';
-import { readFile } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import { afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Probot, ProbotOctokit } from 'probot';
@@ -23,14 +24,8 @@ describe('Sad Creeper', () => {
   let probot: Probot;
   let mockCert: string;
 
-  beforeAll((done) => {
-    readFile(join(__dirname, 'fixtures/mock-cert.pem'), { encoding: 'utf8' }, (err: NodeJS.ErrnoException | null, data: string) => {
-      if (err) {
-        return done(err);
-      }
-      mockCert = data;
-      done();
-    });
+  beforeAll(async () => {
+    mockCert = await readFile(join(__dirname, 'fixtures/mock-cert.pem'), { encoding: 'utf8' });
   });
 
   beforeEach(async () => {
