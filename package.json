@@ -15,7 +15,7 @@
   "repository": "https://github.com/timbru31/sad-creeper.git",
   "type": "module",
   "scripts": {
-    "build": "tsc && tsc -p tsconfig.api.json",
+    "build": "tsc && tsc -p tsconfig.api.json && tsc -p tsconfig.test.json",
     "build:watch": "tsc && (tsc -w --preserveWatchOutput & node --watch --watch-path=.env --watch-path=.github/config.yml --watch-kill-signal=SIGINT --watch-preserve-output ./node_modules/probot/bin/probot.js run ./lib/index.js)",
     "dev": "pnpm run build:watch",
     "start": "pnpm run build && probot run ./lib/index.js",
