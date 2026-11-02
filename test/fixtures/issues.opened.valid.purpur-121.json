@@ -1,0 +1,19 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 11,
+    "user": {
+      "login": "timbru31"
+    },
+    "body": "[17:47:56 INFO]: Current Purpur Version: 1.21.1-2308-8332fa4 (MC: 1.21.1)*\nYou are running the latest version."
+  },
+  "repository": {
+    "name": "sad-creeper",
+    "owner": {
+      "login": "timbru31"
+    }
+  },
+  "installation": {
+    "id": 2
+  }
+}
