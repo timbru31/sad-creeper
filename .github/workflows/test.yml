@@ -8,21 +8,23 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         node-version: [26]
 
     steps:
       - uses: actions/checkout@v6.0.3
 
+      - uses: pnpm/action-setup@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6.4.0
         with:
           node-version: ${{ matrix.node-version }}
+          cache: pnpm
 
-      - run: npm cit
+      - run: pnpm install --frozen-lockfile
 
   auto-merge:
     runs-on: ubuntu-latest

@@ -18,11 +18,11 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc && (tsc -w --preserveWatchOutput & node --watch --watch-path=.env --watch-path=.github/config.yml --watch-kill-signal=SIGINT --watch-preserve-output ./node_modules/probot/bin/probot.js run ./lib/index.js)",
-    "dev": "npm run build:watch",
-    "start": "npm run build && probot run ./lib/index.js",
+    "dev": "pnpm run build:watch",
+    "start": "pnpm run build && probot run ./lib/index.js",
     "lint": "oxlint --fix",
-    "format": "oxfmt '!**/package-lock.json' '!**/public/**'",
-    "format:check": "oxfmt --check '!**/package-lock.json' '!**/public/**'",
+    "format": "oxfmt --ignore-path .oxfmtignore",
+    "format:check": "oxfmt --check --ignore-path .oxfmtignore",
     "test": "vitest run && oxlint",
     "test:watch": "vitest --coverage"
   },
@@ -43,5 +43,6 @@
   },
   "engines": {
     "node": ">=26"
-  }
+  },
+  "packageManager": "pnpm@12.16.1"
 }
