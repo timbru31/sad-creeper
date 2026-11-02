@@ -6,7 +6,7 @@ interface ConfigObject {
 }
 
 const SERVER_VERSION_REGEX =
-  /(?:This server is running |Current Purpur)?\w*\+?\s*version:? (?:git-)?[\w.@-]+\s*(?:\(MC:\s?\d+\.\d+\.\d+\)|\(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\))(?:\s*\(Implementing API version \d+(?:\.\d+)*\.?-R\d+(?:\.\d+)*(?:-SNAPSHOT)?\))*/iu;
+  /(?:This server is running |Current Purpur)?\w*\+?\s*version:? (?:git-)?[\w./@-]+\s*(?:\(MC:\s?\d+(?:\.\d+)+\)|\(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\))(?:\s*\(Implementing API version \d+(?:\.\d+)*\.?-R\d+(?:\.\d+)*(?:-SNAPSHOT)?\))*/iu;
 const COMMENT_REGEX = /(<!--.*?-->)/gsu;
 const SECRET_REGEX = /IReallyKnowWhatIAmDoingISwear/u;
 

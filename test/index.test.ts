@@ -8,6 +8,7 @@ import sadCreeper from "../src/index.js";
 import payloadWithSecretPhrase from "./fixtures/issues.opened.no.version.but.secret.json" with { type: "json" };
 import payloadNoVersion from "./fixtures/issues.opened.no.version.json" with { type: "json" };
 import payloadValidVersion from "./fixtures/issues.opened.valid.version.json" with { type: "json" };
+import payloadValidModernVersions from "./fixtures/issues.opened.valid.modern.versions.json" with { type: "json" };
 import payloadVersionInComment from "./fixtures/issues.opened.version.in.comment.json" with { type: "json" };
 import payloadVersionInMultilineComment from "./fixtures/issues.opened.version.in.multiline-comment.json" with { type: "json" };
 import payloadVersionInNestedComment from "./fixtures/issues.opened.version.in.nested-comment.json" with { type: "json" };
@@ -153,6 +154,32 @@ describe("Sad Creeper", () => {
       id: "",
       name: "issues",
       payload: payloadValidVersion,
+    } as EmitterWebhookEvent<"issues.opened">);
+
+    await Promise.race([nockPromise, timeout]);
+  });
+
+  test("creates no comment when an issue is opened w/ modern version outputs", async () => {
+    const nockPromise = new Promise((_resolve, reject) => {
+      nock("https://api.github.com")
+        .post("/repos/timbru31/sad-creeper/issues/5/comments", (_body: { body: string }) => {
+          reject(new Error("A valid modern version should not create an issue comment!"));
+          return true;
+        })
+        .reply(200);
+    });
+
+    const timeout = new Promise<void>((resolve) => {
+      const id = setTimeout(() => {
+        clearTimeout(id);
+        resolve();
+      }, 1000);
+    });
+
+    await probot.receive({
+      id: "",
+      name: "issues",
+      payload: payloadValidModernVersions,
     } as EmitterWebhookEvent<"issues.opened">);
 
     await Promise.race([nockPromise, timeout]);
