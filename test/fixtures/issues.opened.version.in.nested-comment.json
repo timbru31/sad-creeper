@@ -1,0 +1,19 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 4,
+    "user": {
+      "login": "timbru31"
+    },
+    "body": "<<!-- hidden -->!-- This server is running CraftBukkit version git-Spigot-06f33d0-86fdf92 (MC:1.12.2) (Implementing API version 1.12.2-R0.1-SNAPSHOT) -->"
+  },
+  "repository": {
+    "name": "sad-creeper",
+    "owner": {
+      "login": "timbru31"
+    }
+  },
+  "installation": {
+    "id": 2
+  }
+}
