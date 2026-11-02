@@ -37,7 +37,6 @@
     "nock": "^15.0.5",
     "oxfmt": "^0.75.0",
     "oxlint": "^1.90.0",
-    "smee-client": "^5.0.0",
     "typescript": "^7.0.2",
     "vitest": "^5.0.5"
   },
