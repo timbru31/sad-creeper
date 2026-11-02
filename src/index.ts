@@ -1,4 +1,4 @@
-import { Probot } from 'probot';
+import { Probot } from "probot";
 
 interface ConfigObject {
   issueIsMissingVersionOutputComment: string;
@@ -11,14 +11,14 @@ const COMMENT_REGEX = /(<!--.*?-->)/gu;
 const SECRET_REGEX = /IReallyKnowWhatIAmDoingISwear/u;
 
 function sadCreeper(app: Probot): void {
-  app.on('issues.opened', async (context) => {
+  app.on("issues.opened", async (context) => {
     const originalIssueBody = context.payload.issue.body;
-    const cleanedIssueBody = originalIssueBody ? originalIssueBody.replaceAll(COMMENT_REGEX, '') : '';
-    if (!SERVER_VERSION_REGEX.test(cleanedIssueBody) && !SECRET_REGEX.test(originalIssueBody ?? '')) {
-      const config = await context.config<ConfigObject>('config.yml', {
+    const cleanedIssueBody = originalIssueBody ? originalIssueBody.replaceAll(COMMENT_REGEX, "") : "";
+    if (!SERVER_VERSION_REGEX.test(cleanedIssueBody) && !SECRET_REGEX.test(originalIssueBody ?? "")) {
+      const config = await context.config<ConfigObject>("config.yml", {
         issueIsMissingVersionOutputComment:
-          'Your issue does not contain a valid output of the /version command and will now be closed and ignored.\n' +
-          'Please create a new issue, follow the template and include a valid /version output.',
+          "Your issue does not contain a valid output of the /version command and will now be closed and ignored.\n" +
+          "Please create a new issue, follow the template and include a valid /version output.",
         issueIsMissingVersionOutputClose: true,
       });
       if (config && config.issueIsMissingVersionOutputComment) {
@@ -28,7 +28,7 @@ function sadCreeper(app: Probot): void {
           }),
         );
         if (config.issueIsMissingVersionOutputClose) {
-          await context.octokit.rest.issues.update(context.issue({ state: 'closed' }));
+          await context.octokit.rest.issues.update(context.issue({ state: "closed" }));
         }
       }
     }
