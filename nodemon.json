@@ -1,7 +1,0 @@
-{
-    "signal": "SIGINT",
-    "watch": ["lib", ".env", ".github/config.yml"],
-    "delay": "2000",
-    "verbose": false,
-    "exec": ["npm run start"]
-}
