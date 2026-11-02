@@ -9,6 +9,8 @@ import payloadWithSecretPhrase from "./fixtures/issues.opened.no.version.but.sec
 import payloadNoVersion from "./fixtures/issues.opened.no.version.json" with { type: "json" };
 import payloadValidVersion from "./fixtures/issues.opened.valid.version.json" with { type: "json" };
 import payloadVersionInComment from "./fixtures/issues.opened.version.in.comment.json" with { type: "json" };
+import payloadVersionInMultilineComment from "./fixtures/issues.opened.version.in.multiline-comment.json" with { type: "json" };
+import payloadVersionInNestedComment from "./fixtures/issues.opened.version.in.nested-comment.json" with { type: "json" };
 
 const issueCreatedBody = {
   body:
@@ -82,6 +84,52 @@ describe("Sad Creeper", () => {
       name: "issues",
       payload: payloadVersionInComment,
     } as EmitterWebhookEvent<"issues.opened">);
+  });
+
+  test("creates a comment when the version is hidden in a multi-line comment", async () => {
+    const scope = nock("https://api.github.com")
+      .post("/repos/timbru31/sad-creeper/issues/3/comments", (body: { body: string }) => {
+        expect(body).toMatchObject(issueCreatedBody);
+        return true;
+      })
+      .reply(200)
+      .patch("/repos/timbru31/sad-creeper/issues/3", (body: { state: string }) => {
+        expect(body.state).toStrictEqual("closed");
+        return true;
+      })
+      .reply(200);
+
+    await probot.receive({
+      id: "",
+      name: "issues",
+      payload: payloadVersionInMultilineComment,
+    } as EmitterWebhookEvent<"issues.opened">);
+
+    expect(scope.isDone()).toBe(true);
+  });
+
+  test("creates a comment when a version is revealed by removing a nested comment", async () => {
+    const scope = nock("https://api.github.com")
+      .post("/repos/timbru31/sad-creeper/issues/4/comments", (body: { body: string }) => {
+        expect(body).toMatchObject(issueCreatedBody);
+        return true;
+      })
+      .reply(200)
+      .patch("/repos/timbru31/sad-creeper/issues/4", (body: { state: string }) => {
+        expect(body.state).toStrictEqual("closed");
+        return true;
+      })
+      .reply(200);
+
+    // Removing the inner comment on a single pass leaves
+    // "<!-- This server ... -->", which still hides the version.
+    await probot.receive({
+      id: "",
+      name: "issues",
+      payload: payloadVersionInNestedComment,
+    } as EmitterWebhookEvent<"issues.opened">);
+
+    expect(scope.isDone()).toBe(true);
   });
 
   test("creates no comment when an issue is opened w/ a valid version", async () => {
