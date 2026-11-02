@@ -22,13 +22,13 @@ function sadCreeper(app: Probot): void {
         issueIsMissingVersionOutputClose: true,
       });
       if (config && config.issueIsMissingVersionOutputComment) {
-        await context.octokit.issues.createComment(
+        await context.octokit.rest.issues.createComment(
           context.issue({
             body: config.issueIsMissingVersionOutputComment,
           }),
         );
         if (config.issueIsMissingVersionOutputClose) {
-          await context.octokit.issues.update(context.issue({ state: 'closed' }));
+          await context.octokit.rest.issues.update(context.issue({ state: 'closed' }));
         }
       }
     }
