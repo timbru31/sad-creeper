@@ -176,9 +176,6 @@ importers:
       '@octokit/webhooks':
         specifier: ^14.1.2
         version: 14.2.0
-      '@octokit/webhooks-types':
-        specifier: ^7.6.1
-        version: 7.6.1
       '@types/node':
         specifier: ^26.6.6
         version: 26.6.6
@@ -565,10 +562,6 @@ packages:
   '@octokit/webhooks-methods@6.0.0':
     resolution: {integrity: sha512-MFlzzoDJVw/GcbfzVC1RLR36QqkTLUf79vLVO3D+xn7r0QgxnFoLZgtrzxiQErAjFUOdH6fas2KeQJ1yr/qaXQ==}
     engines: {node: '>= 20'}
-
-  '@octokit/webhooks-types@7.6.1':
-    resolution: {integrity: sha512-S8u2cJzklBC0FgTwWVLaM8tMrDuDMVE4xiTK4EYXM9GntyvrdbSoxqDQa+Fh57CCNApyIpyeqPhhFEmHPfrXgw==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   '@octokit/webhooks@14.2.0':
     resolution: {integrity: sha512-da6KbdNCV5sr1/txD896V+6W0iamFWrvVl8cHkBSPT+YlvmT3DwXa4jxZnQc+gnuTEqSWbBeoSZYTayXH9wXcw==}
@@ -2411,8 +2404,6 @@ snapshots:
       '@octokit/openapi-types': 29.0.1
 
   '@octokit/webhooks-methods@6.0.0': {}
-
-  '@octokit/webhooks-types@7.6.1': {}
 
   '@octokit/webhooks@14.2.0':
     dependencies:

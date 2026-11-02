@@ -1,14 +1,14 @@
-import type { Issue, IssuesOpenedEvent } from '@octokit/webhooks-types';
+import type { EmitterWebhookEvent } from '@octokit/webhooks';
 import nock from 'nock';
 import { readFile } from 'node:fs/promises';
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { join } from 'node:path';
 import { Probot, ProbotOctokit } from 'probot';
-import sadCreeper from '../src';
-import payloadWithSecretPhrase from './fixtures/issues.opened.no.version.but.secret.json';
-import payloadNoVersion from './fixtures/issues.opened.no.version.json';
-import payloadValidVersion from './fixtures/issues.opened.valid.version.json';
-import payloadVersionInComment from './fixtures/issues.opened.version.in.comment.json';
+import sadCreeper from '../src/index.js';
+import payloadWithSecretPhrase from './fixtures/issues.opened.no.version.but.secret.json' with { type: 'json' };
+import payloadNoVersion from './fixtures/issues.opened.no.version.json' with { type: 'json' };
+import payloadValidVersion from './fixtures/issues.opened.valid.version.json' with { type: 'json' };
+import payloadVersionInComment from './fixtures/issues.opened.version.in.comment.json' with { type: 'json' };
 
 const issueCreatedBody = {
   body:
@@ -46,12 +46,12 @@ describe('Sad Creeper', () => {
 
   test('creates a comment when an issue is opened w/o a valid version', async () => {
     nock('https://api.github.com')
-      .post('/repos/timbru31/sad-creeper/issues/1/comments', (body: IssuesOpenedEvent) => {
+      .post('/repos/timbru31/sad-creeper/issues/1/comments', (body: { body: string }) => {
         expect(body).toMatchObject(issueCreatedBody);
         return true;
       })
       .reply(200)
-      .patch('/repos/timbru31/sad-creeper/issues/1', (body: Issue) => {
+      .patch('/repos/timbru31/sad-creeper/issues/1', (body: { state: string }) => {
         expect(body.state).toStrictEqual('closed');
         return true;
       })
@@ -60,18 +60,18 @@ describe('Sad Creeper', () => {
     await probot.receive({
       id: '',
       name: 'issues',
-      payload: payloadNoVersion as IssuesOpenedEvent,
-    });
+      payload: payloadNoVersion,
+    } as EmitterWebhookEvent<'issues.opened'>);
   });
 
   test('creates a comment when an issue is opened w/ a valid version, but included in a comment', async () => {
     nock('https://api.github.com')
-      .post('/repos/timbru31/sad-creeper/issues/2/comments', (body: IssuesOpenedEvent) => {
+      .post('/repos/timbru31/sad-creeper/issues/2/comments', (body: { body: string }) => {
         expect(body).toMatchObject(issueCreatedBody);
         return true;
       })
       .reply(200)
-      .patch('/repos/timbru31/sad-creeper/issues/2', (body: Issue) => {
+      .patch('/repos/timbru31/sad-creeper/issues/2', (body: { state: string }) => {
         expect(body.state).toStrictEqual('closed');
         return true;
       })
@@ -80,14 +80,14 @@ describe('Sad Creeper', () => {
     await probot.receive({
       id: '',
       name: 'issues',
-      payload: payloadVersionInComment as IssuesOpenedEvent,
-    });
+      payload: payloadVersionInComment,
+    } as EmitterWebhookEvent<'issues.opened'>);
   });
 
   test('creates no comment when an issue is opened w/ a valid version', async () => {
     const nockPromise = new Promise((_resolve, reject) => {
       nock('https://api.github.com')
-        .post('/repos/timbru31/sad-creeper/issues/1/comments', (_body: IssuesOpenedEvent) => {
+        .post('/repos/timbru31/sad-creeper/issues/1/comments', (_body: { body: string }) => {
           reject(new Error('A valid version should not create an issue comment!'));
           return true;
         })
@@ -104,8 +104,8 @@ describe('Sad Creeper', () => {
     await probot.receive({
       id: '',
       name: 'issues',
-      payload: payloadValidVersion as IssuesOpenedEvent,
-    });
+      payload: payloadValidVersion,
+    } as EmitterWebhookEvent<'issues.opened'>);
 
     await Promise.race([nockPromise, timeout]);
   });
@@ -113,7 +113,7 @@ describe('Sad Creeper', () => {
   test('creates no comment when an issue is opened w/ the secret phrase', async () => {
     const nockPromise = new Promise((_resolve, reject) => {
       nock('https://api.github.com')
-        .post('/repos/timbru31/sad-creeper/issues/1/comments', (_body: IssuesOpenedEvent) => {
+        .post('/repos/timbru31/sad-creeper/issues/1/comments', (_body: { body: string }) => {
           reject(new Error('The secret phrase should not create a comment!'));
           return true;
         })
@@ -130,8 +130,8 @@ describe('Sad Creeper', () => {
     await probot.receive({
       id: '',
       name: 'issues',
-      payload: payloadWithSecretPhrase as IssuesOpenedEvent,
-    });
+      payload: payloadWithSecretPhrase,
+    } as EmitterWebhookEvent<'issues.opened'>);
 
     await Promise.race([nockPromise, timeout]);
   });

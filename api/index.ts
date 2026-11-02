@@ -1,5 +1,4 @@
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
-import type { IssuesOpenedEvent } from '@octokit/webhooks-types';
 import { getPrivateKey } from '@probot/get-private-key';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { promises as fsPromises } from 'node:fs';
@@ -39,7 +38,7 @@ const handler = async (request: VercelRequest, response: VercelResponse): Promis
     await probot.receive({
       id,
       name,
-      payload: request.body as IssuesOpenedEvent,
+      payload: request.body,
     } as EmitterWebhookEvent<'issues.opened'>);
     response.status(200).send(null);
   } catch (err) {
