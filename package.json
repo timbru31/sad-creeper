@@ -1,51 +1,47 @@
 {
   "name": "sad-creeper",
   "version": "1.0.0",
-  "type": "module",
-  "exports": "./index.js",
   "private": true,
   "description": "A Probot app to check for a valid server version output in newly created issues.",
-  "author": "Tim Brust <github@timbrust.de>",
-  "license": "MIT",
-  "repository": "https://github.com/timbru31/sad-creeper.git",
-  "homepage": "https://github.com/timbru31/sad-creeper",
-  "bugs": "https://github.com/timbru31/sad-creeper/issues",
   "keywords": [
-    "probot",
     "github",
+    "probot",
     "probot-app"
   ],
+  "homepage": "https://github.com/timbru31/sad-creeper",
+  "bugs": "https://github.com/timbru31/sad-creeper/issues",
+  "license": "MIT",
+  "author": "Tim Prüssing <github@timbrust.de>",
+  "repository": "https://github.com/timbru31/sad-creeper.git",
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc && (tsc -w --preserveWatchOutput & nodemon)",
-    "dev": "npm run build:watch",
-    "start": "npm run build && probot run ./lib/index.js",
-    "lint": "eslint **/*.ts --fix",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js && eslint **/*.ts",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch --notify --notifyMode=change --coverage"
+    "build": "tsc && tsc -p tsconfig.api.json && tsc -p tsconfig.test.json",
+    "build:watch": "tsc && (tsc -w --preserveWatchOutput & node --watch --watch-path=.env --watch-path=.github/config.yml --watch-kill-signal=SIGINT --watch-preserve-output ./node_modules/probot/bin/probot.js run ./lib/index.js)",
+    "dev": "pnpm run build:watch",
+    "start": "pnpm run build && probot run ./lib/index.js",
+    "lint": "oxlint --fix",
+    "format": "oxfmt --ignore-path .oxfmtignore",
+    "format:check": "oxfmt --check --ignore-path .oxfmtignore",
+    "test": "vitest run && oxlint",
+    "test:watch": "vitest --coverage"
   },
   "dependencies": {
     "@probot/get-private-key": "^2.1.1",
-    "probot": "^13.4.7"
+    "probot": "^14.3.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.31.0",
-    "@types/eslint__js": "^8.42.3",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^22.10.3",
-    "@vercel/node": "^5.10.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.6",
-    "jest": "^30.4.2",
-    "nock": "^14.0.15",
-    "nodemon": "^3.1.14",
-    "prettier": "^3.8.4",
-    "smee-client": "^4.4.1",
-    "ts-jest": "^29.4.11",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.61.1"
+    "@octokit/webhooks": "^14.1.2",
+    "@types/node": "^26.6.6",
+    "@vercel/node": "^29.0.1",
+    "@vitest/coverage-v8": "^5.0.5",
+    "nock": "^15.0.5",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
   },
   "engines": {
-    "node": ">=22"
-  }
+    "node": ">=26"
+  },
+  "packageManager": "pnpm@12.16.1"
 }
