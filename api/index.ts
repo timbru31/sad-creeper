@@ -3,19 +3,16 @@ import type { IssuesOpenedEvent } from '@octokit/webhooks-types';
 import { getPrivateKey } from '@probot/get-private-key';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { promises as fsPromises } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 import { Probot } from 'probot';
 import sadCreeper from '../src/index.js';
 
 let probot: Probot;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
-const initializeProbot = async () => {
+const initializeProbot = async (): Promise<Probot> => {
   const options = {
     appId: Number(process.env.APP_ID),
-    privateKey: getPrivateKey()!,
+    privateKey: getPrivateKey() ?? undefined,
     secret: process.env.WEBHOOK_SECRET,
   };
 
@@ -25,9 +22,9 @@ const initializeProbot = async () => {
   return localProbotInstance;
 };
 
-export default async (request: VercelRequest, response: VercelResponse) => {
+const handler = async (request: VercelRequest, response: VercelResponse): Promise<void> => {
   if (request.method === 'GET') {
-    const content = await fsPromises.readFile(resolve(__dirname, '../public/index.html'), {
+    const content = await fsPromises.readFile(resolve(import.meta.dirname, '../public/index.html'), {
       encoding: 'utf-8',
     });
     response.status(200).send(content);
@@ -49,3 +46,5 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     response.status(500).json({ error: JSON.stringify(err), req: JSON.stringify(request) });
   }
 };
+
+export default handler;

@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -16,14 +15,14 @@ jobs:
         node-version: [26]
 
     steps:
-    - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@v6.0.3
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v6.4.0
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - run: npm cit
+      - run: npm cit
 
   auto-merge:
     runs-on: ubuntu-latest

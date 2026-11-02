@@ -1,27 +1,29 @@
 {
   "name": "sad-creeper",
   "version": "1.0.0",
-  "type": "module",
-  "exports": "./index.js",
   "private": true,
   "description": "A Probot app to check for a valid server version output in newly created issues.",
-  "author": "Tim Brust <github@timbrust.de>",
-  "license": "MIT",
-  "repository": "https://github.com/timbru31/sad-creeper.git",
-  "homepage": "https://github.com/timbru31/sad-creeper",
-  "bugs": "https://github.com/timbru31/sad-creeper/issues",
   "keywords": [
-    "probot",
     "github",
+    "probot",
     "probot-app"
   ],
+  "homepage": "https://github.com/timbru31/sad-creeper",
+  "bugs": "https://github.com/timbru31/sad-creeper/issues",
+  "license": "MIT",
+  "author": "Tim Brust <github@timbrust.de>",
+  "repository": "https://github.com/timbru31/sad-creeper.git",
+  "type": "module",
+  "exports": "./index.js",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc && (tsc -w --preserveWatchOutput & nodemon)",
     "dev": "npm run build:watch",
     "start": "npm run build && probot run ./lib/index.js",
-    "lint": "eslint **/*.ts --fix",
-    "test": "vitest run && eslint **/*.ts",
+    "lint": "oxlint --fix",
+    "format": "oxfmt '!**/package-lock.json' '!**/public/**'",
+    "format:check": "oxfmt --check '!**/package-lock.json' '!**/public/**'",
+    "test": "vitest run && oxlint",
     "test:watch": "vitest --coverage"
   },
   "dependencies": {
@@ -29,19 +31,15 @@
     "probot": "^13.4.7"
   },
   "devDependencies": {
-    "@eslint/js": "^9.31.0",
-    "@types/eslint__js": "^8.42.3",
     "@types/node": "^26.6.6",
     "@vercel/node": "^5.10.2",
     "@vitest/coverage-v8": "^5.0.5",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.6",
     "nock": "^14.0.15",
     "nodemon": "^3.1.14",
-    "prettier": "^3.8.4",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
     "smee-client": "^4.4.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.61.1",
     "vitest": "^5.0.5"
   },
   "engines": {

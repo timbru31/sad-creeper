@@ -2,17 +2,13 @@ import type { Issue, IssuesOpenedEvent } from '@octokit/webhooks-types';
 import nock from 'nock';
 import { readFile } from 'node:fs/promises';
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { Probot, ProbotOctokit } from 'probot';
 import sadCreeper from '../src';
 import payloadWithSecretPhrase from './fixtures/issues.opened.no.version.but.secret.json';
 import payloadNoVersion from './fixtures/issues.opened.no.version.json';
 import payloadValidVersion from './fixtures/issues.opened.valid.version.json';
 import payloadVersionInComment from './fixtures/issues.opened.version.in.comment.json';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const issueCreatedBody = {
   body:
@@ -25,7 +21,7 @@ describe('Sad Creeper', () => {
   let mockCert: string;
 
   beforeAll(async () => {
-    mockCert = await readFile(join(__dirname, 'fixtures/mock-cert.pem'), { encoding: 'utf8' });
+    mockCert = await readFile(join(import.meta.dirname, 'fixtures/mock-cert.pem'), { encoding: 'utf8' });
   });
 
   beforeEach(async () => {
