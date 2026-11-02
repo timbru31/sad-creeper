@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
-    "@vercel/node": "^5.10.2",
+    "@vercel/node": "^29.0.1",
     "@vitest/coverage-v8": "^5.0.5",
     "nock": "^15.0.5",
     "oxfmt": "^0.75.0",
