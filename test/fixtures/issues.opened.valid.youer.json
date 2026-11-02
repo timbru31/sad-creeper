@@ -1,0 +1,19 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 12,
+    "user": {
+      "login": "timbru31"
+    },
+    "body": "This server is running Youer version 1.21.1-0cec50ef (2026-06-08T07:34:29Z) (Implementing API version 1.21.1-R0.1-SNAPSHOT, NeoForge version 21.1.228)."
+  },
+  "repository": {
+    "name": "sad-creeper",
+    "owner": {
+      "login": "timbru31"
+    }
+  },
+  "installation": {
+    "id": 2
+  }
+}

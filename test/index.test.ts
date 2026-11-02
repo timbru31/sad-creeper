@@ -8,6 +8,13 @@ import sadCreeper from "../src/index.js";
 import payloadWithSecretPhrase from "./fixtures/issues.opened.no.version.but.secret.json" with { type: "json" };
 import payloadNoVersion from "./fixtures/issues.opened.no.version.json" with { type: "json" };
 import payloadValidVersion from "./fixtures/issues.opened.valid.version.json" with { type: "json" };
+import payloadValidPaperModern from "./fixtures/issues.opened.valid.paper-modern.json" with { type: "json" };
+import payloadValidSpigotModern from "./fixtures/issues.opened.valid.spigot-modern.json" with { type: "json" };
+import payloadValidFolia from "./fixtures/issues.opened.valid.folia.json" with { type: "json" };
+import payloadValidPufferfish from "./fixtures/issues.opened.valid.pufferfish.json" with { type: "json" };
+import payloadValidPurpurCalendar from "./fixtures/issues.opened.valid.purpur-calendar.json" with { type: "json" };
+import payloadValidPurpur121 from "./fixtures/issues.opened.valid.purpur-121.json" with { type: "json" };
+import payloadValidYouer from "./fixtures/issues.opened.valid.youer.json" with { type: "json" };
 import payloadVersionInComment from "./fixtures/issues.opened.version.in.comment.json" with { type: "json" };
 import payloadVersionInMultilineComment from "./fixtures/issues.opened.version.in.multiline-comment.json" with { type: "json" };
 import payloadVersionInNestedComment from "./fixtures/issues.opened.version.in.nested-comment.json" with { type: "json" };
@@ -132,11 +139,17 @@ describe("Sad Creeper", () => {
     expect(scope.isDone()).toBe(true);
   });
 
-  test("creates no comment when an issue is opened w/ a valid version", async () => {
+  async function expectNoIssueAction(payload: unknown, message: string): Promise<void> {
+    const number = (payload as { issue: { number: number } }).issue.number;
     const nockPromise = new Promise((_resolve, reject) => {
       nock("https://api.github.com")
-        .post("/repos/timbru31/sad-creeper/issues/1/comments", (_body: { body: string }) => {
-          reject(new Error("A valid version should not create an issue comment!"));
+        .post(`/repos/timbru31/sad-creeper/issues/${number}/comments`, () => {
+          reject(new Error(message));
+          return true;
+        })
+        .reply(200)
+        .patch(`/repos/timbru31/sad-creeper/issues/${number}`, () => {
+          reject(new Error(message));
           return true;
         })
         .reply(200);
@@ -152,36 +165,46 @@ describe("Sad Creeper", () => {
     await probot.receive({
       id: "",
       name: "issues",
-      payload: payloadValidVersion,
+      payload,
     } as EmitterWebhookEvent<"issues.opened">);
 
     await Promise.race([nockPromise, timeout]);
+  }
+
+  test("creates no comment when an issue is opened w/ a valid version", async () => {
+    await expectNoIssueAction(payloadValidVersion, "A valid version should not create an issue comment!");
+  });
+
+  test("creates no comment when an issue is opened w/ a modern Paper version", async () => {
+    await expectNoIssueAction(payloadValidPaperModern, "A modern Paper version should not create an issue comment!");
+  });
+
+  test("creates no comment when an issue is opened w/ a modern Spigot version", async () => {
+    await expectNoIssueAction(payloadValidSpigotModern, "A modern Spigot version should not create an issue comment!");
+  });
+
+  test("creates no comment when an issue is opened w/ a Folia version", async () => {
+    await expectNoIssueAction(payloadValidFolia, "A Folia version should not create an issue comment!");
+  });
+
+  test("creates no comment when an issue is opened w/ a Pufferfish version", async () => {
+    await expectNoIssueAction(payloadValidPufferfish, "A Pufferfish version should not create an issue comment!");
+  });
+
+  test("creates no comment when an issue is opened w/ a current Purpur version (calendar MC)", async () => {
+    await expectNoIssueAction(payloadValidPurpurCalendar, "A current Purpur version should not create an issue comment!");
+  });
+
+  test("creates no comment when an issue is opened w/ a Purpur 1.21 version", async () => {
+    await expectNoIssueAction(payloadValidPurpur121, "A Purpur 1.21 version should not create an issue comment!");
+  });
+
+  test("creates no comment when an issue is opened w/ a Youer version", async () => {
+    await expectNoIssueAction(payloadValidYouer, "A Youer version should not create an issue comment!");
   });
 
   test("creates no comment when an issue is opened w/ the secret phrase", async () => {
-    const nockPromise = new Promise((_resolve, reject) => {
-      nock("https://api.github.com")
-        .post("/repos/timbru31/sad-creeper/issues/1/comments", (_body: { body: string }) => {
-          reject(new Error("The secret phrase should not create a comment!"));
-          return true;
-        })
-        .reply(200);
-    });
-
-    const timeout = new Promise<void>((resolve) => {
-      const id = setTimeout(() => {
-        clearTimeout(id);
-        resolve();
-      }, 1000);
-    });
-
-    await probot.receive({
-      id: "",
-      name: "issues",
-      payload: payloadWithSecretPhrase,
-    } as EmitterWebhookEvent<"issues.opened">);
-
-    await Promise.race([nockPromise, timeout]);
+    await expectNoIssueAction(payloadWithSecretPhrase, "The secret phrase should not create a comment!");
   });
 
   afterEach(() => {

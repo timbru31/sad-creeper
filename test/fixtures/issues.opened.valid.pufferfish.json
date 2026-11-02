@@ -1,0 +1,19 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 9,
+    "user": {
+      "login": "timbru31"
+    },
+    "body": "[20:12:52 INFO]: Checking version, please wait... [20:12:53 INFO]: This server is running Pufferfish version 1.21.1-21-HEAD@cfa3c61 (2024-10-22T23:08:19Z) (Implementing API version 1.21.1-R0.1-SNAPSHOT)"
+  },
+  "repository": {
+    "name": "sad-creeper",
+    "owner": {
+      "login": "timbru31"
+    }
+  },
+  "installation": {
+    "id": 2
+  }
+}
