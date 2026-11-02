@@ -11,7 +11,7 @@
   "homepage": "https://github.com/timbru31/sad-creeper",
   "bugs": "https://github.com/timbru31/sad-creeper/issues",
   "license": "MIT",
-  "author": "Tim Brust <github@timbrust.de>",
+  "author": "Tim Prüssing <github@timbrust.de>",
   "repository": "https://github.com/timbru31/sad-creeper.git",
   "type": "module",
   "exports": "./index.js",

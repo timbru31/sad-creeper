@@ -22,4 +22,4 @@ Feel free to use this repository for testing the bot: https://github.com/timbru3
 
 ---
 
-Built by (c) Tim Brust and contributors. Released under the MIT license.
+Built by (c) Tim Prüssing and contributors. Released under the MIT license.
