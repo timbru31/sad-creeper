@@ -34,11 +34,11 @@
     "@types/node": "^26.6.6",
     "@vercel/node": "^5.10.2",
     "@vitest/coverage-v8": "^5.0.5",
-    "nock": "^14.0.15",
+    "nock": "^15.0.5",
     "oxfmt": "^0.75.0",
     "oxlint": "^1.90.0",
-    "smee-client": "^4.4.1",
-    "typescript": "^5.9.3",
+    "smee-client": "^5.0.0",
+    "typescript": "^7.0.2",
     "vitest": "^5.0.5"
   },
   "engines": {
