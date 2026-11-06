@@ -170,8 +170,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       probot:
-        specifier: ^14.3.5
-        version: 14.3.5
+        specifier: ^14.3.6
+        version: 14.3.6
     devDependencies:
       '@octokit/webhooks':
         specifier: ^14.1.2
@@ -1808,8 +1808,8 @@ packages:
     resolution: {integrity: sha512-973driJZvxiGOQ5ONsFhOF/DtzPMOMtgC11kCpUrPGMTgqp2q/1gwzCquocrN33is0VZ5GFHXZYMM9l6h67v2Q==}
     engines: {node: '>=10'}
 
-  probot@14.3.5:
-    resolution: {integrity: sha512-gsbrch6ug06LgUrzWc6bSHIjoOR1+KA16gjpDPCPTgECLxvBd1B7MT1i78tiyRWw7pOgfn7BZSIMvSIdnHHDVg==}
+  probot@14.3.6:
+    resolution: {integrity: sha512-C2LJ0vtPXTIHrpHCbFKwK42h/mOUaHzBExUJSi0BSqjrHpmW7jbfBepbcmBqfXHlsFbet1I+qGQ9j9pqqDRsPA==}
     engines: {node: ^20.18.1 || >= 22}
     hasBin: true
 
@@ -3380,7 +3380,7 @@ snapshots:
     dependencies:
       parse-ms: 2.1.0
 
-  probot@14.3.5:
+  probot@14.3.6:
     dependencies:
       '@fastify/deepmerge': 3.2.4
       '@octokit/core': 7.0.8
