@@ -34,7 +34,7 @@
     "@types/node": "^26.6.6",
     "@vercel/node": "^29.0.1",
     "@vitest/coverage-v8": "^5.0.5",
-    "nock": "^15.0.5",
+    "nock": "^15.0.6",
     "oxfmt": "^0.76.0",
     "oxlint": "^1.90.0",
     "typescript": "^7.0.2",
