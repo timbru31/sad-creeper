@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@probot/get-private-key": "^2.1.1",
-    "probot": "^14.3.6"
+    "probot": "^14.3.7"
   },
   "devDependencies": {
     "@octokit/webhooks": "^14.1.2",
