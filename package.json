@@ -32,7 +32,7 @@
   "devDependencies": {
     "@octokit/webhooks": "^14.1.2",
     "@types/node": "^26.6.6",
-    "@vercel/node": "^29.0.1",
+    "@vercel/node": "^30.0.0",
     "@vitest/coverage-v8": "^5.0.5",
     "nock": "^15.0.6",
     "oxfmt": "^0.76.0",
